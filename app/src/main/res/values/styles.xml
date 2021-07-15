@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Widget.Pomodoro.MaterialCardView" parent="Widget.MaterialComponents.CardView">
+
+    </style>
+
+    <style name="Widget.Pomodoro.TextView" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textAppearance"> @style/TextAppearance.MaterialComponents.Button</item>
+        <item name="android:textSize">32sp</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+    </style>
+
+    <style name="Widget.Pomodoro.ImageButton" parent="Widget.AppCompat.ImageButton">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="tint">?attr/colorSecondary</item>
+        <item name="android:scaleY">2</item>
+        <item name="android:scaleX">2</item>
+        <item name="rippleColor">@color/teal_700</item>
+    </style>
+
+</resources>

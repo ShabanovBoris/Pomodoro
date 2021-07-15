@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ShapeAppearanceOverlay.Pomodoro.MediumComponent" parent="ShapeAppearance.MaterialComponents.MediumComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">30%</item>
+        <item name="cornerSizeTopLeft">0%</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.Pomodoro.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+
+    </style>
+
+
+
+</resources>
