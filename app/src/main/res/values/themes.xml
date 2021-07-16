@@ -13,7 +13,7 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
         <item name="colorOnSurface">@color/white</item>
-        <item name="colorSurface">#1AFFFCFC</item>
+        <item name="colorSurface">@color/alpha_white</item>
         <item name="android:windowBackground">@color/indigo</item>
         <!--<item name="materialAlertDialogTheme">keep</item> -->
         <item name="android:forceDarkAllowed">false</item>

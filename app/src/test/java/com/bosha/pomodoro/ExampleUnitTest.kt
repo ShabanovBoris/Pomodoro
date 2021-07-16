@@ -1,5 +1,8 @@
 package com.bosha.pomodoro
 
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -10,8 +13,9 @@ import org.junit.Assert.*
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 class ExampleUnitTest {
+    @DelicateCoroutinesApi
     @Test
     fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
+    
     }
 }

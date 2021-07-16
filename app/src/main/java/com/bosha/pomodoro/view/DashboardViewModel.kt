@@ -1,4 +1,4 @@
-package com.bosha.pomodoro
+package com.bosha.pomodoro.view
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
