@@ -1,7 +1,7 @@
 package com.bosha.pomodoro
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.Flow
+import kotlin.reflect.KFunction1
+import kotlin.time.ExperimentalTime
 
 
 interface StopwatchListener {
@@ -14,5 +14,6 @@ interface StopwatchListener {
 
     fun delete(id: Int)
 
-    fun setOnTickListener(block: (() -> Unit)?)
+    @ExperimentalTime
+    fun setOnTickListener(retainHolder: KFunction1<Boolean, Unit>, block: (() -> Unit)?)
 }

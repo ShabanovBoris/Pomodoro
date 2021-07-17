@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingHorizontal="@dimen/main_item_margin"
+        android:layout_marginHorizontal="@dimen/main_item_margin"
         android:clipToPadding="false">
 
         <androidx.appcompat.widget.AppCompatImageButton
@@ -22,7 +23,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/ib_cancel"
             app:layout_constraintStart_toEndOf="@id/tv_timer"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            />
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/ib_cancel"
@@ -32,7 +34,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/ib_delete_button"
             app:layout_constraintStart_toEndOf="@id/ib_start"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            />
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/ib_delete_button"
@@ -48,8 +51,8 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_animated_point"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
             android:background="@drawable/blink_animation"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/tv_timer"

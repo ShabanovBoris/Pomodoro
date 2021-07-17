@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.bosha.pomodoro.R
 import com.bosha.pomodoro.StopwatchListener
 import com.bosha.pomodoro.data.entity.Stopwatch
@@ -15,6 +16,8 @@ import kotlin.time.ExperimentalTime
 @ExperimentalTime
 class StopwatchAdapter(val stopwatchListener: StopwatchListener)
     : ListAdapter<Stopwatch, StopwatchViewHolder>(diffUtil) {
+
+
 
     private companion object {
         private val diffUtil = object : DiffUtil.ItemCallback<Stopwatch>() {
@@ -41,11 +44,9 @@ class StopwatchAdapter(val stopwatchListener: StopwatchListener)
             stopwatchListener
         )
 
-    override fun onBindViewHolder(holder: StopwatchViewHolder, position: Int) =
+    override fun onBindViewHolder(holder: StopwatchViewHolder, position: Int) {
         holder.bind(getItem(position))
-
-
-
+    }
 }
 
 

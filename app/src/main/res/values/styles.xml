@@ -11,8 +11,8 @@
     </style>
 
     <style name="Widget.Pomodoro.ImageButton" parent="Widget.AppCompat.ImageButton">
-        <item name="android:background">@android:color/transparent</item>
-        <item name="android:foreground">@drawable/image_button_ripple</item>
+        <item name="android:background">@drawable/image_button_ripple</item>
+
         <item name="android:clickable">true</item>
         <item name="tint">?attr/colorSecondary</item>
         <item name="android:scaleY">1.8</item>

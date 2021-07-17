@@ -9,7 +9,6 @@ import com.bosha.pomodoro.StopwatchListener
 import com.bosha.pomodoro.data.entity.Stopwatch
 import com.bosha.pomodoro.data.entity.time
 import com.bosha.pomodoro.databinding.RecyclerTimerItemBinding
-import kotlinx.coroutines.CoroutineScope
 import kotlin.time.ExperimentalTime
 
 
@@ -28,7 +27,6 @@ class StopwatchViewHolder(
         } else {
             stopTimer()
         }
-
         initListeners(stopwatch)
     }
 
@@ -41,31 +39,35 @@ class StopwatchViewHolder(
                 listener.start(stopwatch.id)
             }
         }
-
         binding.ibCancel.setOnClickListener {
             listener.reset(stopwatch.id)
         }
-
         binding.ibDeleteButton.setOnClickListener {
             listener.delete(stopwatch.id)
         }
     }
 
+
     private fun startTimer(stopwatch: Stopwatch) {
         isActive = true
+        if(adapterPosition == layoutPosition)
+        this.setIsRecyclable(false)
+
+
         val image = ContextCompat.getDrawable(binding.root.context, R.drawable.ic_pause)
         binding.ibStart.setImageDrawable(image)
 
         binding.ivAnimatedPoint.isInvisible = false
         (binding.ivAnimatedPoint.background as? AnimationDrawable)?.start()
 
-        listener.setOnTickListener{
+        listener.setOnTickListener(::setIsRecyclable){
             if (isActive) {
                 stopwatch.currentMs += UNIT_TEN_MS
                 binding.tvTimer.text = stopwatch.currentMs.time()
             }
         }
     }
+
 
     private fun stopTimer() {
         isActive = false
