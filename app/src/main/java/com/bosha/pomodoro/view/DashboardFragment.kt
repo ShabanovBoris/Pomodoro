@@ -6,26 +6,28 @@ import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bosha.pomodoro.R
 import com.bosha.pomodoro.StopwatchListener
 import com.bosha.pomodoro.data.entity.Stopwatch
 import com.bosha.pomodoro.databinding.DashboardFragmentBinding
 import com.bosha.pomodoro.view.adapter.StopwatchAdapter
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlin.time.ExperimentalTime
 @ExperimentalTime
-class DashboardFragment : Fragment(R.layout.dashboard_fragment), StopwatchListener {
+class DashboardFragment : Fragment(R.layout.dashboard_fragment) {
 
     private val viewModel: DashboardViewModel by viewModels()
+
     private var _binding: DashboardFragmentBinding? = null
     private val binding get() = checkNotNull(_binding)
-
-
     private val stopwatchAdapter by lazy(LazyThreadSafetyMode.NONE)
-    { StopwatchAdapter(this)}
+    { StopwatchAdapter(viewModel.listener) }
 
-    private val mStopwatches = mutableListOf<Stopwatch>()
-    private var nextId = 0
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -37,37 +39,20 @@ class DashboardFragment : Fragment(R.layout.dashboard_fragment), StopwatchListen
                 adapter = stopwatchAdapter
             }
             fabAddTimer.setOnClickListener {
-                mStopwatches.add(Stopwatch(nextId++,0,false))
-                stopwatchAdapter.submitList(mStopwatches.toList())
+                viewModel.addStopwatch(Stopwatch(viewModel.nextId++,0,false))
             }
-
         }
 
+        viewModel.sharedFlow
+            .onEach(::handleChanges)
+            .launchIn(lifecycleScope)
     }
 
-    override fun start(id: Int) {
-       changeStopwatch(id,null,true)
-    }
+    private fun handleChanges(list: List<Stopwatch>) =
+        stopwatchAdapter.submitList(list)
 
-    override fun stop(id: Int, currentMs: Long) {
-        changeStopwatch(id, currentMs, false)
-    }
-
-    override fun reset(id: Int) {
-        changeStopwatch(id, 0, false)
-    }
-
-    @RequiresApi(Build.VERSION_CODES.N)
-    override fun delete(id: Int) {
-        mStopwatches.removeIf { it.id == id }
-        stopwatchAdapter.submitList(mStopwatches.toList())
-    }
-
-    private fun changeStopwatch(id: Int, currentMs: Long?, isStarted: Boolean) {
-        val index = mStopwatches.indexOfFirst { it.id == id }
-        if (index != -1)  mStopwatches[index].also {
-            mStopwatches[index] = Stopwatch(it.id, currentMs ?: it.currentMs, isStarted)
-        }
-        stopwatchAdapter.submitList(mStopwatches.toList())
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }
