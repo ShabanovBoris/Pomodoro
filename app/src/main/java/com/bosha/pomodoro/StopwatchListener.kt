@@ -14,6 +14,8 @@ interface StopwatchListener {
 
     fun delete(id: Int)
 
+    fun setFinish(id: Int)
+
     @ExperimentalTime
-    fun setOnTickListener(retainHolder: KFunction1<Boolean, Unit>, block: (() -> Unit)?)
+    fun setOnTickListener(recycleHolder: KFunction1<Boolean, Unit>, block: (() -> Unit)?)
 }

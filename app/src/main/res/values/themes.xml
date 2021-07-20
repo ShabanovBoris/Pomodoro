@@ -15,12 +15,16 @@
         <item name="colorOnSurface">@color/white</item>
         <item name="colorSurface">@color/alpha_white</item>
         <item name="android:windowBackground">@color/indigo</item>
+        <item name="colorAccent">@color/indigo_light</item>
         <!--<item name="materialAlertDialogTheme">keep</item> -->
         <item name="android:forceDarkAllowed">false</item>
         <item name="shapeAppearanceMediumComponent">@style/ShapeAppearanceOverlay.Pomodoro.MediumComponent</item>
         <item name="shapeAppearanceSmallComponent">@style/ShapeAppearanceOverlay.Pomodoro.SmallComponent</item>
+        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearanceOverlay.Pomodoro.LargeComponent</item>
         <item name="materialCardViewStyle">@style/Widget.Pomodoro.MaterialCardView</item>
         <item name="android:textViewStyle">@style/Widget.Pomodoro.TextView</item>
         <item name="imageButtonStyle">@style/Widget.Pomodoro.ImageButton</item>
+        <item name="customProgressButtonStyle">@style/Widget.Pomodoro.CustomProgressBar</item>
+        <item name="bottomSheetDialogTheme">@style/Widget.Pomodoro.BottomSheetStyle</item>
     </style>
 </resources>

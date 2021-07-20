@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <declare-styleable name="CustomProgressBar">
+        <attr name="circleBackground" format="color|reference" />
+        <attr name="customColor" format="color"/>
+        <attr name="customStyle" format="enum">
+            <enum name="fill" value="0" />
+            <enum name="stroke" value="1"/>
+        </attr>
+
+
+    </declare-styleable>
+
+
+
+
+    <declare-styleable name="Theme.Pomodoro">
+        <attr name="customProgressButtonStyle" format="reference" />
+    </declare-styleable>
+    
+    
+</resources>

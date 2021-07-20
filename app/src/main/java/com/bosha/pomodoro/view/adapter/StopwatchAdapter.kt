@@ -4,35 +4,35 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
-import com.bosha.pomodoro.R
 import com.bosha.pomodoro.StopwatchListener
 import com.bosha.pomodoro.data.entity.Stopwatch
 import com.bosha.pomodoro.databinding.RecyclerTimerItemBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
-class StopwatchAdapter(val stopwatchListener: StopwatchListener)
-    : ListAdapter<Stopwatch, StopwatchViewHolder>(diffUtil) {
+class StopwatchAdapter(val stopwatchListener: StopwatchListener) :
+    ListAdapter<Stopwatch, StopwatchViewHolder>(diffUtil) {
 
+
+    override fun getItemViewType(position: Int): Int =
+        if (getItem(position).isFinished) 0 else 1
 
 
     private companion object {
         private val diffUtil = object : DiffUtil.ItemCallback<Stopwatch>() {
 
             override fun areItemsTheSame(oldItem: Stopwatch, newItem: Stopwatch): Boolean =
-               oldItem.id == newItem.id
+                oldItem.id == newItem.id
 
 //            override fun getChangePayload(oldItem: Stopwatch, newItem: Stopwatch) = Any()
 
             override fun areContentsTheSame(oldItem: Stopwatch, newItem: Stopwatch): Boolean =
-                 oldItem == newItem
+                oldItem == newItem
 
 
         }
     }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StopwatchViewHolder =
         StopwatchViewHolder(

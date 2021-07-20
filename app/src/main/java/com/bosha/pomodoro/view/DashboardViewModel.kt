@@ -6,12 +6,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bosha.pomodoro.StopwatchListener
 import com.bosha.pomodoro.data.entity.Stopwatch
+import com.bosha.pomodoro.utils.UNIT_TEN_MS
 import com.bosha.pomodoro.utils.tickerFlow
-import com.bosha.pomodoro.view.adapter.StopwatchViewHolder
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.flow.*
 import kotlin.reflect.KFunction1
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
@@ -22,7 +21,7 @@ class DashboardViewModel : ViewModel() {
     private val stopwatches = mutableListOf<Stopwatch>()
     private var doOnTick: (() -> Unit)? = null
     private var setIsRecyclableHolder: KFunction1<Boolean, Unit>? = null
-    private val _sharedFlow = MutableSharedFlow<List<Stopwatch>>(1)
+    private val _sharedFlow = MutableSharedFlow<List<Stopwatch>>(1,10)
     val sharedFlow = _sharedFlow.asSharedFlow()
     var nextId = 0
 
@@ -43,7 +42,8 @@ class DashboardViewModel : ViewModel() {
         }
 
         override fun reset(id: Int) {
-            changeStopwatch(id, 0, false)
+            val index = stopwatches.indexOfFirst { it.id == id }
+            changeStopwatch(id, stopwatches[index].beginTime, false)
         }
 
         @RequiresApi(Build.VERSION_CODES.N)
@@ -53,16 +53,26 @@ class DashboardViewModel : ViewModel() {
             _sharedFlow.tryEmit(stopwatches.toList())
         }
 
-        override fun setOnTickListener(recyclableHolder: KFunction1<Boolean, Unit>, block: (() -> Unit)?) {
-            doOnTick = block
-            setIsRecyclableHolder = recyclableHolder
+        override fun setFinish(id: Int) {
+            changeStopwatch(id, 0, isStarted = false, isFinish = true)
         }
 
-        private fun changeStopwatch(id: Int, currentMs: Long?, isStarted: Boolean) {
+        override fun setOnTickListener(recycleHolder: KFunction1<Boolean, Unit>, block: (() -> Unit)?) {
+            doOnTick = block
+            setIsRecyclableHolder = recycleHolder
+        }
+
+        private fun changeStopwatch(id: Int, currentMs: Long?, isStarted: Boolean, isFinish: Boolean = false) {
             setIsRecyclableHolder?.invoke(true)
             val index = stopwatches.indexOfFirst { it.id == id }
-            if (index != -1) stopwatches[index].also {
-                stopwatches[index] = Stopwatch(it.id, currentMs ?: it.currentMs, isStarted)
+            if (index != -1) stopwatches[index].also { stopwatch ->
+                stopwatches[index] = stopwatches[index]
+                        .copy(
+                            id = stopwatch.id,
+                            untilFinishMs = currentMs ?: stopwatch.untilFinishMs,
+                            isStarted = isStarted,
+                            isFinished = isFinish
+                        )
             }
             _sharedFlow.tryEmit(stopwatches.toList())
         }
@@ -70,7 +80,10 @@ class DashboardViewModel : ViewModel() {
         private fun clearStartedTimers(){
             val index = stopwatches.indexOfFirst { it.isStarted }
             if (index != -1) stopwatches[index].also {
-                stopwatches[index] = Stopwatch(it.id, it.currentMs, false)
+                stopwatches[index] = stopwatches[index]
+                    .copy(it.id, it.untilFinishMs, isStarted = false)
+
+
             }
         }
 
@@ -79,10 +92,6 @@ class DashboardViewModel : ViewModel() {
     fun addStopwatch(stopwatch: Stopwatch) {
         stopwatches.add(stopwatch)
         _sharedFlow.tryEmit(stopwatches.toList())
-    }
-
-    private companion object {
-        private const val UNIT_TEN_MS = 10
     }
 
 }

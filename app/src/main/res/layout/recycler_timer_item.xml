@@ -1,76 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="75dp"
-    android:layout_margin="@dimen/main_item_margin"
-    tools:context=".MainActivity"
-    >
+    android:layout_height="120dp"
+    android:layout_marginHorizontal="@dimen/main_item_margin"
+    tools:context=".MainActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cv_timer_card_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingHorizontal="@dimen/main_item_margin"
-        android:layout_marginHorizontal="@dimen/main_item_margin"
-        android:clipToPadding="false">
-
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/ib_start"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_arrow"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/ib_cancel"
-            app:layout_constraintStart_toEndOf="@id/tv_timer"
-            app:layout_constraintTop_toTopOf="parent"
-            />
-
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/ib_cancel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_refresh"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/ib_delete_button"
-            app:layout_constraintStart_toEndOf="@id/ib_start"
-            app:layout_constraintTop_toTopOf="parent"
-            />
-
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/ib_delete_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_delete"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/ib_cancel"
-            app:layout_constraintTop_toTopOf="parent"
-            />
+        android:layout_height="75dp"
+        android:layout_gravity="bottom"
+        android:clipToPadding="false"
+        >
 
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_animated_point"
-            android:layout_width="12dp"
-            android:layout_height="12dp"
-            android:background="@drawable/blink_animation"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/tv_timer"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tv_timer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/timer_string"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/ib_start"
-            app:layout_constraintStart_toEndOf="@id/iv_animated_point"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="@dimen/main_item_margin"
+            android:clipToPadding="false"
+            android:paddingHorizontal="@dimen/main_item_margin">
 
 
-</com.google.android.material.card.MaterialCardView>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/ib_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="@string/start_text_button"
+                tools:drawableEnd="@drawable/ic_arrow"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/ib_cancel"
+                app:layout_constraintStart_toEndOf="@id/tv_timer"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/ib_delete_button"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_delete"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/ib_cancel"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/ib_cancel"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_refresh"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/ib_delete_button"
+                app:layout_constraintStart_toEndOf="@id/ib_start"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_animated_point"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:background="@drawable/blink_animation"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/tv_timer"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_timer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/timer_string"
+                android:layout_marginHorizontal="@dimen/main_item_margin"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/ib_start"
+                app:layout_constraintStart_toEndOf="@id/iv_animated_point"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+
+    <com.bosha.pomodoro.utils.CustomProgressBar
+        android:id="@+id/cpb_timer"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_margin="@dimen/main_item_margin"
+        android:translationZ="10dp"/>
+</FrameLayout>
