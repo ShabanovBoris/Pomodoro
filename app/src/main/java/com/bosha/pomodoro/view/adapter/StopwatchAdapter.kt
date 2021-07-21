@@ -10,10 +10,11 @@ import com.bosha.pomodoro.databinding.RecyclerTimerItemBinding
 import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
-class StopwatchAdapter(val stopwatchListener: StopwatchListener) :
+class StopwatchAdapter(private val stopwatchListener: StopwatchListener) :
     ListAdapter<Stopwatch, StopwatchViewHolder>(diffUtil) {
 
 
+    // If holder with stopwatch that was finished, create holder with new viewType
     override fun getItemViewType(position: Int): Int =
         if (getItem(position).isFinished) 0 else 1
 
@@ -24,12 +25,10 @@ class StopwatchAdapter(val stopwatchListener: StopwatchListener) :
             override fun areItemsTheSame(oldItem: Stopwatch, newItem: Stopwatch): Boolean =
                 oldItem.id == newItem.id
 
-//            override fun getChangePayload(oldItem: Stopwatch, newItem: Stopwatch) = Any()
+            override fun getChangePayload(oldItem: Stopwatch, newItem: Stopwatch) = Any()
 
             override fun areContentsTheSame(oldItem: Stopwatch, newItem: Stopwatch): Boolean =
                 oldItem == newItem
-
-
         }
     }
 
@@ -44,9 +43,8 @@ class StopwatchAdapter(val stopwatchListener: StopwatchListener) :
             stopwatchListener
         )
 
-    override fun onBindViewHolder(holder: StopwatchViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: StopwatchViewHolder, position: Int) =
         holder.bind(getItem(position))
-    }
 }
 
 

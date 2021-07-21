@@ -70,7 +70,6 @@ class StopwatchViewHolder(
             iconGravity = MaterialButton.ICON_GRAVITY_END
             text = context.getString(R.string.stop_text_button)
         }
-
         binding.ivAnimatedPoint.isInvisible = false
         (binding.ivAnimatedPoint.background as? AnimationDrawable)?.start()
 

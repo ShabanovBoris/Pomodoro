@@ -6,8 +6,8 @@ data class Stopwatch(
     val id: Int,
     var untilFinishMs: Long,
     val beginTime: Long ,
-    var isStarted: Boolean,
-    var isFinished: Boolean = false
+    val isStarted: Boolean,
+    val isFinished: Boolean = false
 )
 @ExperimentalTime
 fun Long.time(isStart: Boolean = false): String {
