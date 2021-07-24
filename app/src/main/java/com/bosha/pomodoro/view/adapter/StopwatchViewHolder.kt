@@ -2,18 +2,14 @@ package com.bosha.pomodoro.view.adapter
 
 import android.graphics.drawable.AnimationDrawable
 import android.util.TypedValue
-import android.view.Gravity
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.use
 import androidx.core.view.isInvisible
-import androidx.core.widget.TextViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bosha.pomodoro.R
 import com.bosha.pomodoro.StopwatchListener
 import com.bosha.pomodoro.data.entity.Stopwatch
 import com.bosha.pomodoro.data.entity.time
 import com.bosha.pomodoro.databinding.RecyclerTimerItemBinding
-import com.bosha.pomodoro.utils.UNIT_TEN_MS
 import com.google.android.material.button.MaterialButton
 import kotlin.time.ExperimentalTime
 
@@ -23,6 +19,7 @@ class StopwatchViewHolder(
     private val listener: StopwatchListener
 ) : RecyclerView.ViewHolder(binding.root) {
 
+    private var timerStartTime = 0L
     var isActive = false
 
     fun bind(stopwatch: Stopwatch) {
@@ -61,6 +58,7 @@ class StopwatchViewHolder(
 
     private fun startTimer(stopwatch: Stopwatch) {
         isActive = true
+        timerStartTime = System.currentTimeMillis()
         if(adapterPosition == layoutPosition)
         this.setIsRecyclable(false)
 
@@ -73,10 +71,16 @@ class StopwatchViewHolder(
         binding.ivAnimatedPoint.isInvisible = false
         (binding.ivAnimatedPoint.background as? AnimationDrawable)?.start()
 
+
+        val savedValue = stopwatch.beginTime - stopwatch.untilFinishMs
         listener.setOnTickListener(::setIsRecyclable){
             if (isActive) {
-                stopwatch.untilFinishMs -= UNIT_TEN_MS
-                if (stopwatch.untilFinishMs == 0L) listener.setFinish(stopwatch.id)
+                stopwatch.untilFinishMs =
+                    (stopwatch.beginTime - savedValue)  - (System.currentTimeMillis() - timerStartTime)
+                if (stopwatch.untilFinishMs <= 0L) {
+                    stopTimer()
+                    listener.setFinish(stopwatch.id)
+                }
                 binding.tvTimer.text = stopwatch.untilFinishMs.time()
                 binding.cpbTimer.setCurrent(stopwatch.untilFinishMs)
             }

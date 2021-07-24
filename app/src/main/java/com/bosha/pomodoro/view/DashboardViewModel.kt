@@ -27,10 +27,11 @@ class DashboardViewModel : ViewModel() {
     private val _sharedFlow = MutableSharedFlow<TimerResult>(1, 10)
     val sharedFlow = _sharedFlow.asSharedFlow()
 
-
-    val timer = tickerFlow(Duration.Companion.milliseconds(UNIT_TEN_MS))
-        .onEach { doOnTick?.invoke() }
-        .launchIn(viewModelScope)
+    init {
+        tickerFlow(Duration.Companion.milliseconds(UNIT_TEN_MS))
+            .onEach { doOnTick?.invoke() }
+            .launchIn(viewModelScope)
+    }
 
 
     val listener: StopwatchListener = object : StopwatchListener {
@@ -56,10 +57,11 @@ class DashboardViewModel : ViewModel() {
         }
 
         override fun setFinish(id: Int) {
-            changeStopwatch(id, 0, isStarted = false, isFinish = true)
             _sharedFlow.tryEmit(
                 TimerResult.FinishResult(stopwatches.findStopwatchById(id))
             )
+            changeStopwatch(id, 0, isStarted = false, isFinish = true)
+
         }
 
         override fun setOnTickListener(

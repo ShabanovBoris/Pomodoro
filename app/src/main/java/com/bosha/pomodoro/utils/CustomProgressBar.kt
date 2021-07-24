@@ -94,7 +94,7 @@ class CustomProgressBar @JvmOverloads constructor(
             48f,
             width.toFloat()-48,
             height.toFloat()-48,
-            -100f,
+            -90f,
             startAngel,
             true,
             paintBack

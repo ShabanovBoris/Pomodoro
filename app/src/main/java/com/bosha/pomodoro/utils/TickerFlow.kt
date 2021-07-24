@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.flow
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
 
- const val UNIT_TEN_MS = 100
+ const val UNIT_TEN_MS = 16
 
 @ExperimentalTime
 fun tickerFlow(period: Duration, initialDelay: Duration = Duration.ZERO) = flow {
